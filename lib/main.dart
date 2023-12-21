@@ -50,19 +50,27 @@ class MyHomePage extends StatelessWidget {
           title: const Text("Мои задачи"),
         ),
         body: BlocBuilder<TasksBloc, TasksState>(
-          builder: (context, state) => Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const TasksTitle(),
-                const SizedBox(height: 18),
-                TaskNameTextField(onEditingCompleted: _handleButtonPress),
-                const SizedBox(height: 18),
-                AddSaveTaskButton(onButtonPressed: _handleButtonPress, title: state.addSaveButtonTitle),
-                const SizedBox(height: 18),
-                const Expanded(child: TaskList()),
-              ],
+          builder: (context, state) => PopScope(
+            canPop: state.edit == null,
+            onPopInvoked: (didPop) {
+              if (!didPop && state.edit != null) {
+                context.read<TasksBloc>().add(CancelledEditTask());
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const TasksTitle(),
+                  const SizedBox(height: 18),
+                  TaskNameTextField(onEditingCompleted: _handleButtonPress),
+                  const SizedBox(height: 18),
+                  AddSaveTaskButton(onButtonPressed: _handleButtonPress, title: state.addSaveButtonTitle),
+                  const SizedBox(height: 18),
+                  const Expanded(child: TaskList()),
+                ],
+              ),
             ),
           ),
         ),

@@ -34,7 +34,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       emit(TasksState.fromTasks(state.tasks, event.task, event.task.name));
     });
     on<CancelledEditTask>((event, emit) {
-      emit(TasksState.fromTasks(state.tasks, null, state.input));
+      emit(TasksState.fromTasks(state.tasks, null, ""));
     });
     on<SaveTask>((event, emit) {
       state.tasks.firstWhere((element) => element == state.edit).name =
