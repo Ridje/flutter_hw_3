@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_3/tasks/state/task_event.dart';
-import 'package:flutter_hw_3/tasks/widget/task_add_save_button.dart';
-import 'package:flutter_hw_3/tasks/widget/task_name_text_field.dart';
-import 'package:flutter_hw_3/tasks/widget/task_list.dart';
-import 'package:flutter_hw_3/tasks/state/task_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hw_3/tasks/widget/task_title.dart';
+import 'package:flutter_hw_3/tasks/presentation/state/task_event.dart';
+import 'package:flutter_hw_3/tasks/presentation/state/task_state.dart';
+import 'package:flutter_hw_3/tasks/presentation/widget/task_add_save_button.dart';
+import 'package:flutter_hw_3/tasks/presentation/widget/task_list.dart';
+import 'package:flutter_hw_3/tasks/presentation/widget/task_name_text_field.dart';
+import 'package:flutter_hw_3/tasks/presentation/widget/task_title.dart';
+
 
 void main() {
   runApp(const MyApp());

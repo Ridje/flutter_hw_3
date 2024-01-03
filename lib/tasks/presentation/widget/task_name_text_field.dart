@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hw_3/tasks/state/task_event.dart';
-import 'package:flutter_hw_3/tasks/state/task_state.dart';
+import 'package:flutter_hw_3/tasks/presentation/state/task_event.dart';
+import 'package:flutter_hw_3/tasks/presentation/state/task_state.dart';
 
 class TaskNameTextField extends StatefulWidget {
   final Function(BuildContext) onEditingCompleted;

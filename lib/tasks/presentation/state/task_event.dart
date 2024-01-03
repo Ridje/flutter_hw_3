@@ -1,4 +1,5 @@
-import 'package:flutter_hw_3/tasks/state/task.dart';
+
+import 'package:flutter_hw_3/tasks/presentation/state/task.dart';
 
 abstract class TasksEvent {}
 
