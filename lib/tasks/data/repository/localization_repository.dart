@@ -1,11 +1,13 @@
 import 'package:flutter_hw_3/tasks/presentation/change_language/state/language.dart';
 import 'package:hive/hive.dart';
+import 'package:injectable/injectable.dart';
 
 const localizationBox = 'localization_box';
 const _localizationKey = "localization_key";
 
+@Singleton()
 class LocalisationRepository {
-  final Box<String?> _myBox = Hive.box(localizationBox);
+  late final Box<String?> _myBox = Hive.box(localizationBox);
 
   Language? getLanguage() {
     var result = _myBox.get(_localizationKey);

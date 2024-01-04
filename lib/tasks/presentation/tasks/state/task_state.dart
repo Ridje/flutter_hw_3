@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hw_3/tasks/presentation/tasks/state/task.dart';
 import 'package:flutter_hw_3/tasks/presentation/tasks/state/task_event.dart';
+import 'package:injectable/injectable.dart';
 
 class TasksState {
   final List<Task> tasks;
   final Task? edit;
   final String input;
-  String get addSaveButtonTitle => edit == null ? "Добавить" : "Сохранить";
 
   TasksState._({required this.tasks, required this.edit, required this.input});
 
@@ -19,6 +19,7 @@ class TasksState {
   }
 }
 
+@Injectable()
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
   TasksBloc() : super(TasksState.initial()) {
     on<AddTask>((event, emit) {

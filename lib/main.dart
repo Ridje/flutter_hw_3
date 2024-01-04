@@ -11,11 +11,11 @@ import 'package:flutter_hw_3/tasks/presentation/tasks/widget/task_list.dart';
 import 'package:flutter_hw_3/tasks/presentation/tasks/widget/task_name_text_field.dart';
 import 'package:flutter_hw_3/tasks/presentation/tasks/widget/task_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-final warmupAppUseCase = WarmupAppUseCase();
+import 'package:flutter_hw_3/tasks/service/glob_var.dart';
 
 main() async {
-  await warmupAppUseCase();
+  configureDependencies();
+  await getIt<WarmupAppUseCase>().call();
   runApp(const MyApp());
 }
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LanguageBloc()..add(InitLanguageEvent()),
+      create: (context) => getIt<LanguageBloc>()..add(InitLanguageEvent()),
       child: BlocBuilder<LanguageBloc, LanguageState>(
         builder: (context, state) {
           return MaterialApp(
@@ -67,7 +67,7 @@ class MyHomePage extends StatelessWidget {
     return Form(
       key: _formKey,
       child: BlocProvider(
-        create: (_) => TasksBloc(),
+        create: (_) => getIt<TasksBloc>(),
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,

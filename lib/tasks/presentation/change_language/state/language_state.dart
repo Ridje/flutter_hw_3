@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hw_3/tasks/domain/localization_use_case.dart';
 import 'package:flutter_hw_3/tasks/presentation/change_language/state/change_language.dart';
 import 'package:flutter_hw_3/tasks/presentation/change_language/state/language.dart';
+import 'package:injectable/injectable.dart';
 
 class LanguageState {
   final Language selectedLanguage;
@@ -11,11 +12,12 @@ class LanguageState {
   }) : selectedLanguage = selectedLanguage ?? Language.english;
 }
 
+@Injectable()
 class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
-  final getLocaleUseCase = GetLocalizationUseCase();
-  final saveLocaleUseCase = SaveLocalizationUseCase();
+  final GetLocalizationUseCase getLocaleUseCase;
+  final SaveLocalizationUseCase saveLocaleUseCase;
 
-  LanguageBloc() : super(const LanguageState(selectedLanguage: null)) {
+  LanguageBloc(this.getLocaleUseCase, this.saveLocaleUseCase) : super(const LanguageState(selectedLanguage: null)) {
     on<InitLanguageEvent>((event, emit) {
       emit(initLanguage());
     });
