@@ -16,7 +16,6 @@ final warmupAppUseCase = WarmupAppUseCase();
 
 main() async {
   await warmupAppUseCase();
-  print("CONTINUE AFTER INIT HIVE");
   runApp(const MyApp());
 }
 
@@ -49,49 +48,56 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
-  void _handleButtonPress(BuildContext context) {
-    final taskBloc = context.read<TasksBloc>();
+  static final _formKey = GlobalKey<FormState>();
 
-    if (taskBloc.state.edit == null) {
-      taskBloc.add(AddTask());
-    } else {
-      taskBloc.add(SaveTask());
+  void _handleButtonPress(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      final taskBloc = context.read<TasksBloc>();
+
+      if (taskBloc.state.edit == null) {
+        taskBloc.add(AddTask());
+      } else {
+        taskBloc.add(SaveTask());
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => TasksBloc(),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(AppLocalizations.of(context)!.myTasks),
-          actions: const [ChangeLanguageAction()],
-        ),
-        body: BlocBuilder<TasksBloc, TasksState>(
-          builder: (context, state) => PopScope(
-            canPop: state.edit == null,
-            onPopInvoked: (didPop) {
-              if (!didPop && state.edit != null) {
-                context.read<TasksBloc>().add(CancelledEditTask());
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const TasksTitle(),
-                  const SizedBox(height: 18),
-                  TaskNameTextField(onEditingCompleted: _handleButtonPress),
-                  const SizedBox(height: 18),
-                  AddSaveTaskButton(
-                      onButtonPressed: _handleButtonPress,
-                      title: state.edit == null ? AppLocalizations.of(context)!.addTask : AppLocalizations.of(context)!.updateTask),
-                  const SizedBox(height: 18),
-                  const Expanded(child: TaskList()),
-                ],
+    return Form(
+      key: _formKey,
+      child: BlocProvider(
+        create: (_) => TasksBloc(),
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            title: Text(AppLocalizations.of(context)!.myTasks),
+            actions: const [ChangeLanguageAction()],
+          ),
+          body: BlocBuilder<TasksBloc, TasksState>(
+            builder: (context, state) => PopScope(
+              canPop: state.edit == null,
+              onPopInvoked: (didPop) {
+                if (!didPop && state.edit != null) {
+                  context.read<TasksBloc>().add(CancelledEditTask());
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const TasksTitle(),
+                    const SizedBox(height: 18),
+                    TaskNameTextField(onEditingCompleted: _handleButtonPress, formKey: _formKey),
+                    const SizedBox(height: 18),
+                    AddSaveTaskButton(
+                        onButtonPressed: _handleButtonPress,
+                        title: state.edit == null ? AppLocalizations.of(context)!.addTask : AppLocalizations.of(context)!.updateTask),
+                    const SizedBox(height: 18),
+                    const Expanded(child: TaskList()),
+                  ],
+                ),
               ),
             ),
           ),

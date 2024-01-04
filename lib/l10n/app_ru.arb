@@ -4,5 +4,6 @@
     "tasks": "Задачи",
     "taskName": "Название задачи",
     "addTask": "Добавить",
-    "updateTask": "Сохранить"
+    "updateTask": "Сохранить",
+    "taskNameIsEmpty": "Имя задачи должно быть не пустым"
 }

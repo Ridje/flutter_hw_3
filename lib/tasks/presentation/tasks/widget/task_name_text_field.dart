@@ -6,7 +6,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskNameTextField extends StatefulWidget {
   final Function(BuildContext) onEditingCompleted;
-  const TaskNameTextField({super.key, required this.onEditingCompleted});
+  final GlobalKey<FormState> formKey;
+  const TaskNameTextField({
+    super.key,
+    required this.onEditingCompleted,
+    required this.formKey,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -25,7 +30,13 @@ class _TaskNameTextFieldState extends State<TaskNameTextField> {
           _controller.text = state.input;
         }
       },
-      child: TextField(
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return AppLocalizations.of(context)!.taskNameIsEmpty;
+          }
+          return null;
+        },
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           hintText: AppLocalizations.of(context)!.taskName,

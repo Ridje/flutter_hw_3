@@ -4,5 +4,6 @@
     "tasks": "Tапсырмаларым",
     "taskName": "Тапсырма аты",
     "addTask": "Қосу",
-    "updateTask": "Сақтау"
+    "updateTask": "Сақтау",
+    "taskNameIsEmpty": "Тапсырма атауы бос болмауы керек"
 }

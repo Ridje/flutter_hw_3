@@ -7,5 +7,6 @@
   "myTasks": "My tasks",
   "taskName": "Task name",
   "addTask": "Add",
-  "updateTask": "Update"
+  "updateTask": "Update",
+  "taskNameIsEmpty": "Task name should not be empty"
 }
