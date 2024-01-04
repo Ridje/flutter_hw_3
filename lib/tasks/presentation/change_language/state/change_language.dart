@@ -1,7 +1,11 @@
 import 'package:flutter_hw_3/tasks/presentation/change_language/state/language.dart';
 
-class ChangeLanguage {
+abstract class LanguageEvent {}
+
+class ChangeLanguageEvent extends LanguageEvent {
   final Language? newLanguage;
 
-  ChangeLanguage({required this.newLanguage});
+  ChangeLanguageEvent({required this.newLanguage});
 }
+
+class InitLanguageEvent extends LanguageEvent {}

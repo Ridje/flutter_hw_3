@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hw_3/tasks/domain/warmup_app_use_case.dart';
+import 'package:flutter_hw_3/tasks/presentation/change_language/state/change_language.dart';
 import 'package:flutter_hw_3/tasks/presentation/change_language/state/language_state.dart';
 import 'package:flutter_hw_3/tasks/presentation/change_language/widget/change_language_action.dart';
 import 'package:flutter_hw_3/tasks/presentation/tasks/state/task_event.dart';
@@ -10,7 +12,11 @@ import 'package:flutter_hw_3/tasks/presentation/tasks/widget/task_name_text_fiel
 import 'package:flutter_hw_3/tasks/presentation/tasks/widget/task_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() {
+final warmupAppUseCase = WarmupAppUseCase();
+
+main() async {
+  await warmupAppUseCase();
+  print("CONTINUE AFTER INIT HIVE");
   runApp(const MyApp());
 }
 
@@ -20,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LanguageBloc(),
+      create: (context) => LanguageBloc()..add(InitLanguageEvent()),
       child: BlocBuilder<LanguageBloc, LanguageState>(
         builder: (context, state) {
           return MaterialApp(

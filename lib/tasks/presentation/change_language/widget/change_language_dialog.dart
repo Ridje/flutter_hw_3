@@ -35,7 +35,7 @@ class ChangeLanguageDialog {
                       return ListTile(
                         onTap: () {
                           context.read<LanguageBloc>().add(
-                                ChangeLanguage(
+                                ChangeLanguageEvent(
                                   newLanguage: Language.values[index],
                                 ),
                               );
