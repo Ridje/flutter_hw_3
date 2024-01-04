@@ -5,6 +5,8 @@ abstract class TasksEvent {}
 
 class AddTask implements TasksEvent {}
 
+class LoadTasks implements TasksEvent{}
+
 class RemoveTask implements TasksEvent {
   final Task task;
 

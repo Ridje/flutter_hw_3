@@ -64,45 +64,64 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: BlocProvider(
-        create: (_) => getIt<TasksBloc>(),
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: Text(AppLocalizations.of(context)!.myTasks),
-            actions: const [ChangeLanguageAction()],
-          ),
-          body: BlocBuilder<TasksBloc, TasksState>(
-            builder: (context, state) => PopScope(
-              canPop: state.edit == null,
-              onPopInvoked: (didPop) {
-                if (!didPop && state.edit != null) {
-                  context.read<TasksBloc>().add(CancelledEditTask());
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const TasksTitle(),
-                    const SizedBox(height: 18),
-                    TaskNameTextField(onEditingCompleted: _handleButtonPress, formKey: _formKey),
-                    const SizedBox(height: 18),
-                    AddSaveTaskButton(
-                        onButtonPressed: _handleButtonPress,
-                        title: state.edit == null ? AppLocalizations.of(context)!.addTask : AppLocalizations.of(context)!.updateTask),
-                    const SizedBox(height: 18),
-                    const Expanded(child: TaskList()),
-                  ],
+    return BlocProvider(
+      create: (_) => getIt<TasksBloc>()..add(LoadTasks()),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(AppLocalizations.of(context)!.myTasks),
+          actions: const [ChangeLanguageAction()],
+        ),
+        body: BlocBuilder<TasksBloc, TasksState>(
+          builder: (context, state) => PopScope(
+            canPop: state.edit == null && state.showLoader == false,
+            onPopInvoked: (didPop) {
+              if (!didPop && state.edit != null) {
+                context.read<TasksBloc>().add(CancelledEditTask());
+              }
+            },
+            child: Stack(children: [
+              Form(
+                key: _formKey, 
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const TasksTitle(),
+                      const SizedBox(height: 18),
+                      TaskNameTextField(onEditingCompleted: _handleButtonPress, formKey: _formKey),
+                      const SizedBox(height: 18),
+                      AddSaveTaskButton(
+                          onButtonPressed: _handleButtonPress,
+                          title: state.edit == null ? AppLocalizations.of(context)!.addTask : AppLocalizations.of(context)!.updateTask),
+                      const SizedBox(height: 18),
+                      const Expanded(child: TaskList()),
+                    ],
+                  ),
                 ),
               ),
-            ),
+              state.showLoader ? const LoaderTransparent(colorValue: Colors.transparent) : Container()
+            ]),
           ),
         ),
       ),
     );
+  }
+}
+
+class LoaderTransparent extends StatelessWidget {
+  final Color colorValue;
+  const LoaderTransparent({super.key, required this.colorValue});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Colors.black38,
+        child: const Center(
+            child: SizedBox(
+                height: 60.0,
+                width: 60.0,
+                child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.blue), strokeWidth: 5.0))));
   }
 }
