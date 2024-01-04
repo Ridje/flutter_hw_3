@@ -1,0 +1,11 @@
+{
+  "chooseLanguage": "Choose Language",
+  "@chooseLanguage": {
+    "description": "The invitation to choose language used in app"
+  },
+  "tasks": "Tasks",
+  "myTasks": "My tasks",
+  "taskName": "Task name",
+  "addTask": "Add",
+  "updateTask": "Update"
+}

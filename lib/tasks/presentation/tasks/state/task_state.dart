@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hw_3/tasks/presentation/state/task.dart';
-import 'package:flutter_hw_3/tasks/presentation/state/task_event.dart';
+import 'package:flutter_hw_3/tasks/presentation/tasks/state/task.dart';
+import 'package:flutter_hw_3/tasks/presentation/tasks/state/task_event.dart';
 
 class TasksState {
   final List<Task> tasks;

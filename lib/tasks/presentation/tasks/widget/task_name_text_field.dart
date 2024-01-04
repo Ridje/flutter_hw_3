@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hw_3/tasks/presentation/state/task_event.dart';
-import 'package:flutter_hw_3/tasks/presentation/state/task_state.dart';
+import 'package:flutter_hw_3/tasks/presentation/tasks/state/task_event.dart';
+import 'package:flutter_hw_3/tasks/presentation/tasks/state/task_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskNameTextField extends StatefulWidget {
   final Function(BuildContext) onEditingCompleted;
@@ -25,9 +26,9 @@ class _TaskNameTextFieldState extends State<TaskNameTextField> {
         }
       },
       child: TextField(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Название задачи',
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          hintText: AppLocalizations.of(context)!.taskName,
         ),
         onChanged: (value) => {context.read<TasksBloc>().add(InputChangedTask(newInput: value))},
         controller: _controller,
